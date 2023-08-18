@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		616FB6F02A8F9450002FE596 /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616FB6EF2A8F9450002FE596 /* ScanViewController.swift */; };
+		616FB6F22A8F94D2002FE596 /* SerialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616FB6F12A8F94D2002FE596 /* SerialViewController.swift */; };
+		616FB6F42A8F9570002FE596 /* ScanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616FB6F32A8F9570002FE596 /* ScanTableViewCell.swift */; };
 		6183EB372A8E475200BF6814 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6183EB362A8E475200BF6814 /* AppDelegate.swift */; };
 		6183EB392A8E475200BF6814 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6183EB382A8E475200BF6814 /* SceneDelegate.swift */; };
 		6183EB3B2A8E475200BF6814 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6183EB3A2A8E475200BF6814 /* ViewController.swift */; };
@@ -17,6 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		616FB6EF2A8F9450002FE596 /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
+		616FB6F12A8F94D2002FE596 /* SerialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialViewController.swift; sourceTree = "<group>"; };
+		616FB6F32A8F9570002FE596 /* ScanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanTableViewCell.swift; sourceTree = "<group>"; };
 		6183EB332A8E475200BF6814 /* BLE-1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BLE-1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6183EB362A8E475200BF6814 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6183EB382A8E475200BF6814 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +48,9 @@
 		6183EB2A2A8E475200BF6814 = {
 			isa = PBXGroup;
 			children = (
+				616FB6F12A8F94D2002FE596 /* SerialViewController.swift */,
+				616FB6EF2A8F9450002FE596 /* ScanViewController.swift */,
+				616FB6F32A8F9570002FE596 /* ScanTableViewCell.swift */,
 				6183EB352A8E475200BF6814 /* BLE-1 */,
 				6183EB342A8E475200BF6814 /* Products */,
 			);
@@ -143,7 +152,10 @@
 			files = (
 				6183EB3B2A8E475200BF6814 /* ViewController.swift in Sources */,
 				6183EB372A8E475200BF6814 /* AppDelegate.swift in Sources */,
+				616FB6F22A8F94D2002FE596 /* SerialViewController.swift in Sources */,
+				616FB6F02A8F9450002FE596 /* ScanViewController.swift in Sources */,
 				6183EB4B2A8E48BE00BF6814 /* BluetoothSerial.swift in Sources */,
+				616FB6F42A8F9570002FE596 /* ScanTableViewCell.swift in Sources */,
 				6183EB392A8E475200BF6814 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

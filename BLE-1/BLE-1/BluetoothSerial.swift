@@ -1,8 +1,14 @@
 import UIKit
 import CoreBluetooth
 
+/// 블루투스와 관련된 일을 전담하는 글로벌 시리얼 핸들러입니다.
+var serial: BluetoothSerial!
+
 /// 블루투스 통신을 담당할 시리얼을 클래스로 선언합니다. CoreBluetooth를 사용하기 위한 프로토콜을 추가해야합니다.
 class BluetoothSerial: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+    
+    // BluetoothSerialDelegate 프로토콜에 등록된 메서드를 수행하는 delegate입니다.
+    var delegate : BluetoothSerialDelegate?
 
     /// centralManager은 블루투스 주변기기를 검색하고 연결하는 역할을 수행합니다.
     var centralManager : CBCentralManager!
@@ -30,14 +36,13 @@ class BluetoothSerial: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     func startScan() {
         guard centralManager.state == .poweredOn else { return }
        
-      // CBCentralManager의 메서드인 scanForPeripherals를 호출하여 연결가능한 기기들을 검색합니다. 이 떄 withService 파라미터에 nil을 입력하면 모든 종류의 기기가 검색되고, 지금과 같이
-      // serviceUUID를 입력하면 특정 serviceUUID를 가진 기기만을 검색합니다.
+      // CBCentralManager의 메서드인 scanForPeripherals를 호출하여 연결가능한 기기들을 검색합니다. 이 떄 withService 파라미터에 nil을 입력하면 모든 종류의 기기가 검색되고, 지금과 같이 serviceUUID를 입력하면 특정 serviceUUID를 가진 기기만을 검색합니다.
         centralManager.scanForPeripherals(withServices: [serviceUUID], options: nil)
     
         let peripherals = centralManager.retrieveConnectedPeripherals(withServices: [serviceUUID])
         for peripheral in peripherals {
-         // TODO : 검색된 기기들에 대한 처리를 여기에 작성합니다.(잠시 후 작성할 예정입니다)
-       
+         // TODO : 검색된 기기들에 대한 처리를 코드로 작성합니다.
+         delegate?.serialDidDiscoverPeripheral(peripheral: peripheral, RSSI: nil)
         }
     }
 
@@ -65,6 +70,7 @@ class BluetoothSerial: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         // RSSI는 기기의 신호 강도를 의미합니다.
         // TODO : 기기가 검색될 때마다 필요한 코드를 여기에 작성합니다.(잠시 후 작성할 예정입니다)
+        delegate?.serialDidDiscoverPeripheral(peripheral: peripheral, RSSI: RSSI)
     }
     
     
@@ -100,6 +106,7 @@ class BluetoothSerial: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
                 // 데이터를 보내는 타입을 설정합니다. 이는 주변기기가 어떤 type으로 설정되어 있는지에 따라 변경됩니다.
                 writeType = characteristic.properties.contains(.write) ? .withResponse :  .withoutResponse
                 // TODO : 주변 기기와 연결 완료 시 동작하는 코드를 여기에 작성합니다.(잠시 후 작성할 예정입니다)
+                delegate?.serialDidConnectPeripheral(peripheral: peripheral)
             }
         }
     }
@@ -116,4 +123,22 @@ class BluetoothSerial: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
         // 신호 강도와 관련된 코드를 작성합니다.(필요하다면 작성해주세요.)
     }
     
+    /// serial을 초기화할 떄 호출하여야합니다. 시리얼은 nil이여서는 안되기 때문에 항상 초기화후 사용해야 합니다.
+    override init() {
+        super.init()
+        self.centralManager = CBCentralManager(delegate: self, queue: nil)
+    }
+}
+
+
+// 블루투스를 연결하는 과정에서의 시리얼과 뷰의 소통을 위해 필요한 프로토콜입니다.
+protocol BluetoothSerialDelegate : AnyObject {
+    func serialDidDiscoverPeripheral(peripheral : CBPeripheral, RSSI : NSNumber?)
+    func serialDidConnectPeripheral(peripheral : CBPeripheral)
+}
+
+// 프로토콜에 포함되어 있는 일부 함수를 옵셔널로 설정합니다.
+extension BluetoothSerialDelegate {
+    func serialDidDiscoverPeripheral(peripheral : CBPeripheral, RSSI : NSNumber?) {}
+    func serialDidConnectPeripheral(peripheral : CBPeripheral) {}
 }
